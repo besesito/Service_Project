@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from .views import Add_customer
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('klienci/', include('customers.urls')),
+    path('add', Add_customer.as_view(), name='add'),
 ]
