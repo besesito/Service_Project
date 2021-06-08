@@ -1,0 +1,8 @@
+.requiredField{
+    font-weight: bold;
+    color: #db2500;
+}
+
+form {
+    max-width: 500px;
+    }

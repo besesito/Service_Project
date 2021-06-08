@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nazwa</th>
+          <th>Telefon</th>
+          <th>E-mail</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+          <td>{{ customer.name }}</td>
+          <td>{% if customer.phone_number %} {{ customer.phone_number }} {% endif %}</td>
+          <td>{% if customer.email %} {{ customer.email}} {% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+    <div class="text-center">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; pierwsza</a>
+                <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+            {% endif %}
+
+            <span class="current">
+                Strona {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">następna</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

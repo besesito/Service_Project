@@ -2,13 +2,35 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
-<div class="container">
+<div class="container text-center">
+    <h1 class="m-3">Dodaj klienta</h1>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success m-3 ml" data-bs-toggle="modal" data-bs-target="#TagModal">
+      Dodaj nowy tag
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="TagModal" tabindex="-1" aria-labelledby="TagModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post" action="{% url 'customer:add_tag' %}">
+            {% csrf_token %}
+            <div class="modal-body">
+                {{ TagForm|crispy }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+              <button type="submit"  class="btn btn-primary">Dodaj</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <br>
-        <button class="button btn-success" type="submit">Dodaj</button>
+        <button class="btn btn-success m-3" type="submit">Dodaj</button>
     </form>
 </div>
+
 
 {% endblock %}

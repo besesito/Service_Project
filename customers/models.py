@@ -1,13 +1,15 @@
 from django.db import models
-
+from django.shortcuts import reverse
 # Create your models here.
 
 class Tag(models.Model):
     class Meta:
         ordering=['tag']
-    tag = models.CharField(max_length=50)
+    tag = models.CharField(max_length=50, unique=True)
     def __str__(self):
         return (self.tag)
+    def get_absolute_url(self):
+        return reverse('customer:add')
 
 class Platform(models.Model):
     class Meta:
@@ -26,9 +28,9 @@ class Customer(models.Model):
     email = models.EmailField(blank=True, null=True, unique=True)
     phone_number = models.CharField(blank=True, null=True, unique=True, max_length=12)
     address = models.CharField(blank=True, max_length=200)
+    contract = models.DateField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     platforms = models.ManyToManyField(Platform, blank=True)
-    contract = models.DateField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -45,3 +47,6 @@ class Customer(models.Model):
         if not self.phone_number:
             self.phone_number = None
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('customer:detail', kwargs={'pk': self.pk})

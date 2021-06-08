@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from .views import Add_customer
+from .views import Customer_add, Customer_detail, Customer_list, Tag_add, Tag_detail
+
+app_name = 'customer'
 
 urlpatterns = [
-    path('add', Add_customer.as_view(), name='add'),
+    path('', Customer_list.as_view(), name='list'),
+    path('dodaj', Customer_add.as_view(), name='add'),
+    path('<int:pk>/detail', Customer_detail.as_view(), name='detail'),
+    path('dodaj_tag', Tag_add.as_view(), name='add_tag'),
+    path('<int:pk>/detail_tag', Tag_detail.as_view(), name='tag_detail')
 ]
