@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+     <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
+         {{ message|safe }}
+     </div>
+    {% endfor %}
+{% endif %}
+
+<div class="box">
+    <h2 class="text-center">{{ customer.name }}</h2>
+    <p class="text-center text-muted">Utworzony: {{ customer.created }}, ostatnio edytowany {{ customer.updated }}</p>
+    {% if customer.tags.all %}
+        <p>
+            <b>Tagi klienta: </b>
+            {% for tag in customer.tags.all %}
+             {{ tag }}
+            {% endfor %}
+        </p>
+    {% endif %}
+</div>
+
+
+
+
+{% endblock %}
