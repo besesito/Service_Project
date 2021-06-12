@@ -13,22 +13,12 @@ class Customer_add(SuccessMessageMixin, generic.edit.CreateView):
     form_class = CustomerForm
     success_message = "Klient został pomyślnie dodany"
 
-    def get_context_data(self, **kwargs):
-        context = super(Customer_add, self).get_context_data(**kwargs)
-        context.update({'TagForm': TagForm, 'PlatformForm': PlatformForm})
-        return context
-
 
 class Customer_update(SuccessMessageMixin, generic.UpdateView):
     model = Customer
     template_name = 'customers/update.html'
     form_class = CustomerForm
     success_message = 'Klient został pomyślnie zedytowany'
-
-    def get_context_data(self, **kwargs):
-        context = super(Customer_update, self).get_context_data(**kwargs)
-        context.update({'TagForm': TagForm, 'PlatformForm': PlatformForm})
-        return context
 
 
 class Customer_detail(generic.DetailView):
@@ -38,8 +28,7 @@ class Customer_detail(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(Customer_detail, self).get_context_data(**kwargs)
-        services = Service.objects.filter(customer=self.object).order_by('date_time')
-        print(services)
+        services = Service.objects.filter(customer=self.object).order_by('date')
         context.update({'services': services})
         return context
 

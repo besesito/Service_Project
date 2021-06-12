@@ -11,7 +11,7 @@
 {% endif %}
 
 <div class="text-center">
-    <h1 class="m-4">Dodaj usługę</h1>
+    <h1 class="m-2"><b>Dodaj usługę</b></h1>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
@@ -25,6 +25,9 @@
   $(document).ready(function() {
     $('#id_responsible_persons').select2();
     $('#id_notifications').select2();
+    $('#id_customer').select2();
+    $('#id_kind').select2();
+    $('#id_status').select2();
   });
 </script>
 

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load l10n %}
+{% localize on %}
+
+<div class="container">
+    <div class="table-responsive-sm">
+        <table class="table table-sm" style="margin:auto;">
+            <thead>
+            <tr>
+                <th>Akcje</th>
+                <th>Klient</th>
+                <th>Data realizacji</th>
+                <th>Rodzaj</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for service in services %}
+            <tr>
+                <td>
+                    <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
+                    <a href="{% url 'service:update' service.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                </td>
+                <td>
+                        {{ service.customer }}
+                </td>
+                <td>
+                        {{ service.date|default:"do ustalenia" }}
+                </td>
+                <td>
+                    {{ service.kind }}
+                </td>
+                <td>
+                    {{ service.status }}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="text-center m-3">
+        <span>
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; pierwsza</a>
+                <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+            {% endif %}
+
+            <span>
+                Strona {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">następna</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+{% endlocalize %}
+{% endblock %}

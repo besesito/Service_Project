@@ -87,6 +87,7 @@
                     <table class="table table-sm" style="margin:auto;">
                         <thead>
                         <tr>
+                            <th>Akcje</th>
                             <th>Data realizacji</th>
                             <th>Rodzaj</th>
                             <th>Odpowiedzialne osoby</th>
@@ -97,9 +98,11 @@
                         {% for service in services %}
                         <tr>
                             <td>
-                                <a style="color:black" href="{% url 'service:detail' service.pk %}">
-                                    {{ service.date_time|default:"do ustalenia" }}
-                                </a>
+                                <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
+                                <a href="{% url 'service:update' service.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                            </td>
+                            <td>
+                                {{ service.date|default:"do ustalenia" }}
                             </td>
                             <td>
                                 {{ service.kind }}

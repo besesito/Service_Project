@@ -13,12 +13,21 @@ class Kind_of_service(models.Model):
         return self.kind
 
 
+class Status(models.Model):
+    class Meta:
+        ordering=['status']
+    status = models.CharField(max_length=100)
+    def __str__(self):
+        return self.status
+
+
 class Service(models.Model):
     class Meta:
-        ordering=['created']
+        ordering=['date']
     kind = models.ForeignKey(Kind_of_service, on_delete=models.PROTECT)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    date_time = models.DateField(blank=True, null=True)
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
+    date = models.DateField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
     adress = models.CharField(max_length=300, blank=True)
     phone_number = models.CharField(blank=True, max_length=12, validators=[intiger_validate])
@@ -27,6 +36,7 @@ class Service(models.Model):
     notifications = models.ManyToManyField(User, blank=True, related_name='notifications_user')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
     def __str__(self):
         return self.customer.name
     def get_absolute_url(self):

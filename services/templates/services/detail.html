@@ -3,28 +3,40 @@
 {% load l10n %}
 {% localize on %}
 
-{% if messages %}
+<div class="container">
+    {% if messages %}
     {% for message in messages %}
-     <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
-         {{ message|safe }}
-     </div>
+    <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
+        {{ message|safe }}
+    </div>
     {% endfor %}
-{% endif %}
+    {% endif %}
 
-<div class="box">
-    <h2 class="text-center">{{ service.customer.name }}</h2>
-    <p class="text-center text-muted">Utworzony: {{ service.created }}, ostatnio edytowany {{ service.updated }}</p>
-    {% if service.responsible_persons.all %}
+    <div class="box width-500">
+        <h2 class="text-center">{{ service.kind }}
+            <a href="{% url 'service:update' service.id %}"><img class="icon-size-h2" src="/static/img/icons/pencil.png"></a>
+        </h2>
+        <h3 class="text-center">dla klienta
+            <a href="{% url 'customer:detail' service.customer.id %}">{{ service.customer }}</a>
+        </h3>
+        <p class="text-center text-muted">Utworzony: {{ service.created }} przez {{ service.author }}
+            <br> Ostatnio edytowany: {{ service.updated }}
+        </p>
+        <p>Data: <b>{{ service.date|default:"do ustalenia"  }}</b></p>
+        <p>Godzina: <b>{{ service.time|default:"do ustalenia" }}</b></p>
+        <p>Adres: <b>{{ service.adress|default:"do ustalenia" }}</b></p>
+        <p>Numer kontaktowy: <b>{{ service.phone_number|default:"do ustalenia" }}</b></p>
+        <p>Opis: <b>{{ service.description|default:"brak" }}</b></p>
+        {% if service.responsible_persons.all %}
         <p>
-            <b>Tagi klienta: </b>
-            {% for person in service.responsible_persons.all  %}
-                {{ person }}
+            <b>Osoby odpowiedzialne: </b>
+            {% for person in service.responsible_persons.all %}
+            {{ person }}
             {% endfor %}
         </p>
-        <p>Phone number: <b>{{ service.phone_number }}</b></p>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>
-
 
 {% endlocalize %}
 {% endblock %}

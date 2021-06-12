@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from .views import Service_detail, Service_add, Service_update
+from .views import Service_detail, Service_add, Service_update, Service_list
 
 app_name = 'service'
 
@@ -24,4 +24,5 @@ urlpatterns = [
     path('dodaj', Service_add.as_view(), name='add'),
     path('<int:pk>/edytuj', Service_update.as_view(), name='update'),
     path('<int:pk>', Service_detail.as_view(), name='detail'),
+    path('', Service_list.as_view(), name='list'),
 ]

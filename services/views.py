@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Kind_of_service, Service
+from .models import Service
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import ServiceForm
 from customers.models import Customer
@@ -16,8 +16,11 @@ class Service_add(SuccessMessageMixin, generic.CreateView):
         if not form.cleaned_data.get('phone_number'):
             if Customer.objects.get(name=form.cleaned_data.get('customer')).phone_number:
                 form.instance.phone_number = Customer.objects.get(name=form.cleaned_data.get('customer')).phone_number
+        if not form.cleaned_data.get('adress'):
+            if Customer.objects.get(name=form.cleaned_data.get('customer')).address:
+                form.instance.adress = Customer.objects.get(name=form.cleaned_data.get('customer')).address
+        form.instance.author = self.request.user
         return super().form_valid(form)
-
 
 
 class Service_update(SuccessMessageMixin, generic.UpdateView):
@@ -31,3 +34,11 @@ class Service_detail(generic.DetailView):
     model=Service
     template_name='services/detail.html'
     context_object_name = 'service'
+
+
+class Service_list(generic.ListView):
+    model=Service
+    template_name='services/list.html'
+    context_object_name = 'services'
+    paginate_by = 50
+    queryset=Service.objects.all().order_by('status')

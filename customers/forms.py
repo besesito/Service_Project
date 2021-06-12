@@ -10,7 +10,8 @@ class CustomerForm(ModelForm):
         help_texts = {
             'contract': ('Data końcowa umowy'),
             'tags': ('Tagi do łatwej identyfikacji klienta'),
-            'alias': ('Skrócona nazwa klienta')
+            'alias': ('Skrócona nazwa klienta'),
+            'platforms': ('Platformy z których korzysta klient')
         }
         labels = {
             'address': ('Adres'),
@@ -19,7 +20,7 @@ class CustomerForm(ModelForm):
             'phone_number': ('Numer telefonu'),
             'tags': ('Tagi klienta'),
             'platforms': ('Platformy'),
-            'contract': ('Okres umowy')
+            'contract': ('Okres umowy'),
         }
         widgets = {
             'contract': forms.DateInput(attrs={'type': 'date'})

@@ -18,21 +18,41 @@
 
     <title>Service Project</title>
 </head>
+
 <header>
-    <div class="container">
-        <p class="title text-start">Service-Project</p>
-        <p class="menu">
-            <a href="{% url 'customer:list' %}">Klienci</a>
-            <a href="{% url 'customer:list' %}">Usługi</a>
-        </p>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark blue-background">
+        <div class="container">
+            <a class="navbar-brand" href="#">Service-Project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+                    aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="menu">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="{% url 'customer:list' %}">Klienci</a>
+                    <a class="nav-link" href="{% url 'service:list' %}">Usługi</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Dodaj
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'customer:add' %}">Klienta</a></li>
+                            <li><a class="dropdown-item" href="{% url 'service:add' %}">Usługę</a></li>
+                        </ul>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
 </header>
 <body>
 {% block content %}
 {% endblock %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
 </body>
 <footer>
     <span class="white-text text-center">Created by <b>besesito</b> ©</span>

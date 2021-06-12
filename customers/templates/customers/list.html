@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container box">
+<div class="container">
     <div class="table-responsive-sm">
         <table class="table table-sm" style="margin:auto;">
             <thead>
                 <tr>
-                    <th>Nazwa</th>
+                    <th>Akcje</th>
+                    <th>Klient</th>
                     <th>Telefon</th>
                     <th>E-mail</th>
                 </tr>
@@ -14,7 +15,19 @@
             <tbody>
                 {% for customer in customers %}
                 <tr>
-                    <td><a style="color:black" href="{% url 'customer:detail' customer.pk %}">{{ customer.name }}</a></td>
+                    <td>
+                        <a href="{% url 'customer:detail' customer.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
+                        <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                    </td>
+                    {% if customer.alias %}
+                        <td>
+                            {{ customer.alias }}
+                        </td>
+                    {% else %}
+                        <td>
+                            {{ customer.name }}
+                        </td>
+                    {% endif %}
                     <td>{% if customer.phone_number %} {{ customer.phone_number }} {% endif %}</td>
                     <td>{% if customer.email %} {{ customer.email}} {% endif %}</td>
                 </tr>
