@@ -1,35 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nazwa</th>
-          <th>Telefon</th>
-          <th>E-mail</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for customer in customers %}
-        <tr>
-          <td>{{ customer.name }}</td>
-          <td>{% if customer.phone_number %} {{ customer.phone_number }} {% endif %}</td>
-          <td>{% if customer.email %} {{ customer.email}} {% endif %}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+<div class="container box">
+    <div class="table-responsive-sm">
+        <table class="table table-sm" style="margin:auto;">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Telefon</th>
+                    <th>E-mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td><a style="color:black" href="{% url 'customer:detail' customer.pk %}">{{ customer.name }}</a></td>
+                    <td>{% if customer.phone_number %} {{ customer.phone_number }} {% endif %}</td>
+                    <td>{% if customer.email %} {{ customer.email}} {% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 
-    <div class="text-center">
-        <span class="step-links">
+    <div class="text-center m-3">
+        <span>
             {% if page_obj.has_previous %}
                 <a href="?page=1">&laquo; pierwsza</a>
                 <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
             {% endif %}
 
-            <span class="current">
+            <span>
                 Strona {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
             </span>
 
@@ -41,8 +43,4 @@
     </div>
 </div>
 
-
-
-
-
-{% endblock %}
+    {% endblock %}

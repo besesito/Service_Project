@@ -1,17 +1,19 @@
 from django.forms import ModelForm
 from .models import Customer, Platform, Tag
-from django.core import validators
+from django import forms
+
 
 class CustomerForm(ModelForm):
     class Meta:
         model = Customer
         fields = '__all__'
         help_texts = {
-            'name': ('Oficjalna nazwa klienta'),
-            'alias': ('Skrótowa nazwa w celu łatwiejszej identyfikacji'),
-            'contract': ('Data końcowa umowy')
+            'contract': ('Data końcowa umowy'),
+            'tags': ('Tagi do łatwej identyfikacji klienta'),
+            'alias': ('Skrócona nazwa klienta')
         }
         labels = {
+            'address': ('Adres'),
             'name': ('Nazwa'),
             'nip': ('NIP'),
             'phone_number': ('Numer telefonu'),
@@ -19,6 +21,10 @@ class CustomerForm(ModelForm):
             'platforms': ('Platformy'),
             'contract': ('Okres umowy')
         }
+        widgets = {
+            'contract': forms.DateInput(attrs={'type': 'date'})
+        }
+
 
 class TagForm(ModelForm):
     class Meta:
@@ -27,6 +33,7 @@ class TagForm(ModelForm):
         labels = {
             'tag': 'Dodaj tag'
         }
+
 
 class PlatformForm(ModelForm):
     class Meta:

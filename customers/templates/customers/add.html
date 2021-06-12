@@ -2,35 +2,30 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
-<div class="container text-center">
-    <h1 class="m-3">Dodaj klienta</h1>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-success m-3 ml" data-bs-toggle="modal" data-bs-target="#TagModal">
-      Dodaj nowy tag
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" id="TagModal" tabindex="-1" aria-labelledby="TagModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form method="post" action="{% url 'customer:add_tag' %}">
-            {% csrf_token %}
-            <div class="modal-body">
-                {{ TagForm|crispy }}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-              <button type="submit"  class="btn btn-primary">Dodaj</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+{% if messages %}
+    {% for message in messages %}
+     <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
+         {{ message|safe }}
+     </div>
+    {% endfor %}
+{% endif %}
+
+<div class="text-center container">
+    <h1>Dodaj klienta</h1>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-success m-3" type="submit">Dodaj</button>
+        <button class="crazy-btn btn btn-success" type="submit">Dodaj</button>
     </form>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#id_tags').select2();
+    $('#id_platforms').select2();
+  });
+</script>
 
 {% endblock %}

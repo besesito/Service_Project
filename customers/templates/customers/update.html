@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+{% if messages %}
+    {% for message in messages %}
+     <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
+         {{ message|safe }}
+     </div>
+    {% endfor %}
+{% endif %}
+
+<div class="text-center">
+    <h1 class="m-4">Edytuj klienta</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="crazy-btn btn btn-success" type="submit">Dodaj</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#id_tags').select2();
+    $('#id_platforms').select2();
+  });
+</script>
+
+{% endblock %}

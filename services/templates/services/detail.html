@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load l10n %}
+{% localize on %}
+
+{% if messages %}
+    {% for message in messages %}
+     <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
+         {{ message|safe }}
+     </div>
+    {% endfor %}
+{% endif %}
+
+<div class="box">
+    <h2 class="text-center">{{ service.customer.name }}</h2>
+    <p class="text-center text-muted">Utworzony: {{ service.created }}, ostatnio edytowany {{ service.updated }}</p>
+    {% if service.responsible_persons.all %}
+        <p>
+            <b>Tagi klienta: </b>
+            {% for person in service.responsible_persons.all  %}
+                {{ person }}
+            {% endfor %}
+        </p>
+        <p>Phone number: <b>{{ service.phone_number }}</b></p>
+    {% endif %}
+</div>
+
+
+{% endlocalize %}
+{% endblock %}

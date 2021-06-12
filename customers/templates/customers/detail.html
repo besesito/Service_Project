@@ -1,11 +1,131 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load l10n %}
+{% localize on %}
 
-{{ customer.created }}
-{{ customer.updated }}
-{{ customer.name }}
-{{ customer.tags }}
+<div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
+        {{ message|safe }}
+    </div>
+    {% endfor %}
+    {% endif %}
 
+    <div class="box">
+        <h2 class="text-center">
+            <b>{{ customer.name }}</b>
+            <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-h2" src="/static/img/icons/pencil.png"></a>
+        </h2>
+        <p class="text-center text-muted">
+            Utworzony: {{ customer.created }}, ostatnio edytowany {{ customer.updated }}
+        </p>
+        <div class="row col-xl-12">
+            <div class="col-xl-3">
+                <p>
+                    <b>Alias: </b>
+                    {{ customer.alias|default:"brak" }}
+                </p>
+                <p>
+                    <b>Numer telefonu: </b>
+                    {{ customer.phone_number|default:"brak" }}
+                </p>
+                <p>
+                    <b>E-mail: </b>
+                    {% if customer.email %}
+                    <a href="mailto:{{ customer.email }}">{{ customer.email }}</a>
+                    {% else %}
+                    brak
+                    {% endif %}
+                </p>
+                <p>
+                    <b>Adres: </b>
+                    {{ customer.address|default:"brak" }}
+                </p>
+                <p>
+                    <b>NIP: </b>
+                    {{ customer.nip|default:"brak" }}
+                </p>
+                <p>
+                    <b>Umowa ważna do: </b>
+                    {{ customer.contract|default:"brak" }}
+                </p>
 
+                {% if customer.tags.all %}
+                <p>
+                    <b>Tagi klienta: </b>
+                    {% for tag in customer.tags.all %}
+                    {{ tag }}
+                    {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                {% else %}
+                <p>
+                    <b>Tagi klienta: </b>
+                    brak
+                </p>
+                {% endif %}
 
+                {% if customer.platforms.all %}
+                <p>
+                    <b>Platformy klienta: </b>
+                    {% for platform in customer.platforms.all %}
+                    {{ platform }}
+                    {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                {% else %}
+                <p>
+                    <b>Platformy klienta: </b>
+                    brak
+                </p>
+                {% endif %}
+            </div>
+            <div class="col-xl-9">
+                <h3 class="text-center blue-color"><b>Usługi klienta</b></h3>
+                <div class="table-responsive-sm">
+                    <table class="table table-sm" style="margin:auto;">
+                        <thead>
+                        <tr>
+                            <th>Data realizacji</th>
+                            <th>Rodzaj</th>
+                            <th>Odpowiedzialne osoby</th>
+                            <th>Data dodania</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for service in services %}
+                        <tr>
+                            <td>
+                                <a style="color:black" href="{% url 'service:detail' service.pk %}">
+                                    {{ service.date_time|default:"do ustalenia" }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ service.kind }}
+                            </td>
+                            <td>
+                                {% for person in service.responsible_persons.all %}
+                                {{ person }}
+                                {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {{ service.created }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if not services %}
+                    <br>
+                    <h3 class="blue-color text-center">Brak usuług dla tego klienta</h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endlocalize %}
 {% endblock %}
