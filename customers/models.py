@@ -38,7 +38,7 @@ class Customer(models.Model):
     email = models.EmailField(blank=True, null=True, unique=True)
     phone_number = models.CharField(blank=True, null=True, unique=True, max_length=12, validators=[intiger_validate])
     address = models.CharField(blank=True, max_length=200)
-    contract = models.DateField(blank=True)
+    contract = models.DateField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     platforms = models.ManyToManyField(Platform, blank=True)
     created = models.DateTimeField(auto_now_add=True)

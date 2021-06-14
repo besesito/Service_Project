@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from django.views import generic
-from .models import Customer, Tag
-from .forms import CustomerForm, TagForm, PlatformForm
+from .models import Customer
+from .forms import CustomerForm
 from django.contrib.messages.views import SuccessMessageMixin
 from services.models import Service
 
@@ -39,15 +38,7 @@ class Customer_list(generic.ListView):
     paginate_by=50
 
 
-class Tag_add(SuccessMessageMixin, generic.edit.CreateView):
-    model=Tag
-    template_name='customers/add_tag.html'
-    form_class = TagForm
-    success_message = "Tag został pomyślnie dodany"
 
 
-class Tag_detail(generic.DetailView):
-    model=Tag
-    template_name='customers/tag_detail.html'
-    context_object_name = 'tag'
+
 

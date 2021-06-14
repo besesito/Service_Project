@@ -23,7 +23,7 @@ class CustomerForm(ModelForm):
             'contract': ('Okres umowy'),
         }
         widgets = {
-            'contract': forms.DateInput(attrs={'type': 'date'})
+            'contract': forms.DateInput(attrs={'type': 'date'}),
         }
 
 
@@ -31,15 +31,11 @@ class TagForm(ModelForm):
     class Meta:
         model = Tag
         fields = '__all__'
-        labels = {
-            'tag': 'Dodaj tag'
-        }
+        labels = {'tag': 'Dodaj tag'}
 
 
 class PlatformForm(ModelForm):
     class Meta:
         model = Platform
         fields = '__all__'
-        labels = {
-            'platform': 'Platforma'
-        }
+        labels = {'platform': 'Dodaj platformę'}
