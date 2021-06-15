@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="container">
-    <input id="search_field" class="form-control mt-2 mb-2 width-500" placeholder="Wyszukaj klienta..."/>
+    <input id="search_field" class="form-control mt-3 mb-3 width-500" placeholder="Wyszukaj klienta..."/>
     <div class="table-responsive-sm">
         <table class="table table-sm" style="margin:auto;">
             <thead>
@@ -29,8 +29,8 @@
                             {{ customer.name }}
                         </td>
                     {% endif %}
-                    <td>{% if customer.phone_number %} {{ customer.phone_number }} {% endif %}</td>
-                    <td>{% if customer.email %} {{ customer.email}} {% endif %}</td>
+                    <td>{{ customer.phone_number|default:"brak" }}</td>
+                    <td>{{ customer.email|default:"brak" }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -57,42 +57,7 @@
     </div>
 </div>
 
-<script>
-    const data = '{{ qs_json }}'
-    const rdata = JSON.parse(data.replace(/&quot;/g, '"'))
-    const input = document.getElementById('search_field')
-    let = filtered = []
-    input.addEventListener('keyup', (e)=> {
-        table.innerHTML = ""
-        filtered = rdata.filter(customer=> customer['name'].toLowerCase().includes(e.target.value.toLowerCase()))
-        if (filtered.length > 0){
-            filtered.map(customer=>{
-                if  (customer['phone_number'] == null) {
-                    customer['phone_number'] = ""
-                } else {}
-                if  (customer['alias'] != null) {
-                    customer['name'] = customer['alias']
-                } else {}
-                if  (customer['email'] == null) {
-                    customer['email'] = ""
-                } else {}
-
-                table.innerHTML +=`
-                <tr>
-                    <td>
-                        <a href="http://127.0.0.1:8000/klienci/${customer['id']}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
-                        <a href="http://127.0.0.1:8000/klienci/${customer['id']}/edytuj"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
-                    </td>
-                    <td>${customer['name']}</td>
-                    <td>${customer['phone_number']}</td>
-                    <td>${customer['email']}</td>
-                </tr>
-                `
-            })
-        } else {
-            table.innerHTML = "<br/><b>Nie znaleziono...</b>"
-        }
-    })
+<script>const data = '{{ qs_json }}'</script>
+<script src="/static/js/customers-list.js">
 </script>
-
 {% endblock %}

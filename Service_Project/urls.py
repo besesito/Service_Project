@@ -18,7 +18,7 @@ from django.urls import include, path
 from django.views import generic
 
 urlpatterns = [
-    path('', generic.TemplateView.as_view(template_name='base.html')),
+    path('', generic.TemplateView.as_view(template_name='base.html'), name='home'),
     path('admin/', admin.site.urls),
     path('klienci/', include('customers.urls')),
     path('uslugi/', include('services.urls')),

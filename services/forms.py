@@ -21,13 +21,8 @@ class ServiceForm(forms.ModelForm):
             'time': ('Godzina'),
             'adress': ('Adres'),
             'description': ('Opis zadania'),
-            }
+        }
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
-            'time': forms.TimeInput(attrs={'type': 'time'})
+            'time': forms.TimeInput(attrs={'type': 'time'}),
         }
-
-
-
-
-

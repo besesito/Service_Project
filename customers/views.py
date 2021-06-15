@@ -8,8 +8,8 @@ import json
 # Create your views here.
 
 class Customer_add(SuccessMessageMixin, generic.edit.CreateView):
-    model=Customer
-    template_name='customers/add.html'
+    model = Customer
+    template_name = 'customers/add.html'
     form_class = CustomerForm
     success_message = "Klient został pomyślnie dodany"
 
@@ -22,8 +22,8 @@ class Customer_update(SuccessMessageMixin, generic.UpdateView):
 
 
 class Customer_detail(generic.DetailView):
-    model=Customer
-    template_name='customers/detail.html'
+    model = Customer
+    template_name = 'customers/detail.html'
     context_object_name = 'customer'
 
     def get_context_data(self, **kwargs):
@@ -32,10 +32,10 @@ class Customer_detail(generic.DetailView):
         return context
 
 class Customer_list(generic.ListView):
-    model=Customer
-    template_name='customers/list.html'
+    model = Customer
+    template_name = 'customers/list.html'
     context_object_name = 'customers'
-    paginate_by=50
+    paginate_by = 50
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['qs_json'] = json.dumps(list(Customer.objects.values()), default=str)
