@@ -15,7 +15,8 @@
     <div class="box">
         <h2 class="text-center">
             <b>{{ customer.name }}</b>
-            <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-h2" src="/static/img/icons/pencil.png"></a>
+            <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-h2"
+                                                                   src="/static/img/icons/pencil.png"></a>
         </h2>
         <p class="text-center text-muted">
             Utworzony: {{ customer.created }}, ostatnio edytowany {{ customer.updated }}
@@ -98,8 +99,10 @@
                         {% for service in services %}
                         <tr>
                             <td>
-                                <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
-                                <a href="{% url 'service:update' service.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                                <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p"
+                                                                                     src="/static/img/icons/loupe.png"></a>
+                                <a href="{% url 'service:update' service.id %}"><img class="icon-size-p"
+                                                                                     src="/static/img/icons/pencil.png"></a>
                             </td>
                             <td>
                                 {{ service.date|default:"do ustalenia" }}
@@ -122,8 +125,24 @@
                     </table>
                 </div>
                 {% if not services %}
-                    <br>
-                    <h3 class="blue-color text-center">Brak usuług dla tego klienta</h3>
+                <br>
+                <h3 class="blue-color text-center">Brak usuług dla tego klienta</h3>
+                {% endif %}
+                {% if customer.address %}
+                <br>
+                <iframe
+                        class="text-center"
+                        width="100%"
+                        height="450px"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAm-CaDQC3OYmpfq4cqpFspIC1-HfLyBj8&q={{customer.address}}">
+                </iframe>
+                {% else %}
+                <br/>
+                <br/>
+                <h3 class="text-center blue-color">Brak adresu do wyświetlenia mapy</h3>
                 {% endif %}
             </div>
         </div>
