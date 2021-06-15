@@ -3,6 +3,7 @@ from .models import Customer
 from .forms import CustomerForm
 from django.contrib.messages.views import SuccessMessageMixin
 from services.models import Service
+import json
 
 # Create your views here.
 
@@ -26,9 +27,8 @@ class Customer_detail(generic.DetailView):
     context_object_name = 'customer'
 
     def get_context_data(self, **kwargs):
-        context = super(Customer_detail, self).get_context_data(**kwargs)
-        services = Service.objects.filter(customer=self.object).order_by('date')
-        context.update({'services': services})
+        context = super().get_context_data(**kwargs)
+        context['services'] = Service.objects.filter(customer=self.object).order_by('date')
         return context
 
 class Customer_list(generic.ListView):
@@ -36,6 +36,10 @@ class Customer_list(generic.ListView):
     template_name='customers/list.html'
     context_object_name = 'customers'
     paginate_by=50
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['qs_json'] = json.dumps(list(Customer.objects.values()), default=str)
+        return context
 
 
 
