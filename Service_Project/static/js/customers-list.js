@@ -20,6 +20,7 @@ input.addEventListener('keyup', (e)=> {
                 <td>
                     <a href="http://127.0.0.1:8000/klienci/${customer['id']}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
                     <a href="http://127.0.0.1:8000/klienci/${customer['id']}/edytuj"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                    <a href="http://127.0.0.1:8000/klienci/${customer['id']}/usun"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
                 </td>
                 <td>${customer['name']}</td>
                 <td>${customer['phone_number']}</td>

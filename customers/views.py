@@ -2,6 +2,8 @@ from django.views import generic
 from .models import Customer
 from .forms import CustomerForm
 from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.contrib import messages
 from services.models import Service
 import json
 
@@ -30,6 +32,19 @@ class Customer_detail(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['services'] = Service.objects.filter(customer=self.object).order_by('date')
         return context
+
+
+class Customer_delete(generic.DeleteView):
+    model = Customer
+    template_name = 'customers/delete.html'
+    success_url = reverse_lazy('customer:list')
+    context_object_name = 'customer'
+    success_message = 'Klient został pomyślnie usunięty'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(Customer_delete, self).delete(request, *args, **kwargs)
+
 
 class Customer_list(generic.ListView):
     model = Customer

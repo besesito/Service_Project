@@ -16,6 +16,8 @@
             <h2 class="text-center">{{ service.kind }}
                 <a href="{% url 'service:update' service.id %}"><img class="icon-size-h2"
                                                                      src="/static/img/icons/pencil.png"></a>
+                <a href="{% url 'service:delete' service.id %}"><img class="icon-size-h2"
+                                                                       src="/static/img/icons/bin.png"></a>
             </h2>
             <h3 class="text-center">dla klienta
                 <a href="{% url 'customer:detail' service.customer.id %}">{{ service.customer }}</a>
@@ -23,11 +25,12 @@
             <p class="text-center text-muted">Utworzony: {{ service.created }} przez {{ service.author }}
                 <br> Ostatnio edytowany: {{ service.updated }}
             </p>
-            <p>Data: <b>{{ service.date|default:"do ustalenia" }}</b></p>
-            <p>Godzina: <b>{{ service.time|default:"do ustalenia" }}</b></p>
-            <p>Adres: <b>{{ service.adress|default:"do ustalenia" }}</b></p>
-            <p>Numer kontaktowy: <b>{{ service.phone_number|default:"do ustalenia" }}</b></p>
-            <p>Opis: <b>{{ service.description|default:"brak" }}</b></p>
+            <p><b>Status:</b> {{ service.status }}</p>
+            <p><b>Data:</b> {{ service.date|default:"do ustalenia" }}</p>
+            <p><b>Godzina:</b> {{ service.time|default:"do ustalenia" }}</p>
+            <p><b>Adres:</b> {{ service.adress|default:"do ustalenia" }}</p>
+            <p><b>Numer kontaktowy:</b> {{ service.phone_number|default:"do ustalenia" }}</p>
+            <p><b>Opis:</b> {{ service.description|default:"brak" }}</p>
             {% if service.responsible_persons.all %}
             <p>
                 <b>Osoby odpowiedzialne: </b>
@@ -39,19 +42,19 @@
         </div>
         <div class="col-xl-8">
             {% if service.adress %}
-                <iframe
-                        class="text-center"
-                        width="100%"
-                        height="450px"
-                        style="border:2"
-                        loading="lazy"
-                        allowfullscreen
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAm-CaDQC3OYmpfq4cqpFspIC1-HfLyBj8&q={{service.adress}}">
-                </iframe>
+            <iframe
+                    class="map"
+                    width="100%"
+                    height="450px"
+                    style="border:0"
+                    loading="lazy"
+                    allowfullscreen
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAm-CaDQC3OYmpfq4cqpFspIC1-HfLyBj8&q={{service.adress}}">
+            </iframe>
             {% else %}
-                <br/>
-                <br/>
-                <h3 class="text-center blue-color">Brak adresu do wyświetlenia mapy</h3>
+            <br/>
+            <br/>
+            <h3 class="text-center blue-color">Brak adresu do wyświetlenia mapy</h3>
             {% endif %}
         </div>
     </div>

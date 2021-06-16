@@ -2,6 +2,14 @@
 {% block content %}
 
 <div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="text-center alert alert-{{ message.tags }} mb-4 mt-4">
+        {{ message|safe }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
     <input id="search_field" class="form-control mt-3 mb-3 width-500" placeholder="Wyszukaj klienta..."/>
     <div class="table-responsive-sm">
         <table class="table table-sm" style="margin:auto;">
@@ -19,6 +27,7 @@
                     <td>
                         <a href="{% url 'customer:detail' customer.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
                         <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                        <a href="{% url 'customer:delete' customer.id %}"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
                     </td>
                     {% if customer.alias %}
                         <td>

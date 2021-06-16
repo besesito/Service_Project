@@ -1,7 +1,6 @@
 from .serializers import CustomerSerializer, ServiceSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.http import JsonResponse
 from customers.models import Customer
 from services.models import Service
 

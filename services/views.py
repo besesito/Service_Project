@@ -1,17 +1,18 @@
-from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 from .models import Service
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from .forms import ServiceForm
 from customers.models import Customer
 
-# Create your views here.
 
 class Service_add(SuccessMessageMixin, generic.CreateView):
     model = Service
     template_name = 'services/add.html'
     form_class = ServiceForm
     success_message = 'Usługa została pomyślnie dodana'
+
     def form_valid(self, form):
         if not form.cleaned_data.get('phone_number'):
             if Customer.objects.get(name=form.cleaned_data.get('customer')).phone_number:
@@ -30,15 +31,36 @@ class Service_update(SuccessMessageMixin, generic.UpdateView):
     success_message = 'Usługa została pomyślnie zaktualizowana'
 
 
+class Service_delete(generic.DeleteView):
+    model = Service
+    template_name = 'services/delete.html'
+    success_url = reverse_lazy('service:list')
+    context_object_name = 'service'
+    success_message = 'Usługa został pomyślnie usunięta'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(Service_delete, self).delete(request, *args, **kwargs)
+
+
 class Service_detail(generic.DetailView):
-    model=Service
-    template_name='services/detail.html'
+    model = Service
+    template_name = 'services/detail.html'
     context_object_name = 'service'
 
 
 class Service_list(generic.ListView):
-    model=Service
-    template_name='services/list.html'
+    model = Service
+    template_name = 'services/list.html'
     context_object_name = 'services'
     paginate_by = 50
-    queryset=Service.objects.all().order_by('status')
+    queryset = Service.objects.all().order_by('status')
+
+
+class My_services(generic.ListView):
+    model = Service
+    template_name = 'services/my_services.html'
+    context_object_name = 'services'
+    paginate_by = 50
+    def get_queryset(self):
+        return Service.objects.filter(responsible_persons=self.request.user).order_by('date')

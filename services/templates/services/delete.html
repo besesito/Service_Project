@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form class="box text-center" method="post">{% csrf_token %}
+
+    <p><b>Czy na pewno chcesz usunąć usługę {{ service.kind }} dla klienta {{ service.customer }}?</b></p>
+
+    <button class="btn btn-danger" type="submit">Usuń</button>
+    <button class="btn btn-secondary" type="button" onclick="history.go(-1)">Anuluj</button>
+
+</form>
+
+{% endblock %}

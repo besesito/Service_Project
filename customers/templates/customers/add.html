@@ -16,6 +16,7 @@
         {% csrf_token %}
         {{ form|crispy }}
         <button class="crazy-btn btn btn-success" type="submit">Dodaj</button>
+        <button class="btn btn-secondary" type="button" onclick="history.go(-1)">Anuluj</button>
     </form>
 </div>
 
