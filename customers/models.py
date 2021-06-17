@@ -1,26 +1,22 @@
 from django.db import models
 from django.shortcuts import reverse
 from Service_Project.validators import intiger_validate
+from django.db.models.functions import Lower
 
-
-# Create your models here.
 
 class Tag(models.Model):
     class Meta:
-        ordering = ['tag']
+        ordering = [Lower('tag')]
 
     tag = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return (self.tag)
 
-    def get_absolute_url(self):
-        return reverse('customer:add')
-
 
 class Platform(models.Model):
     class Meta:
-        ordering = ['platform']
+        ordering = [Lower('platform')]
 
     platform = models.CharField(max_length=50)
 
@@ -30,7 +26,7 @@ class Platform(models.Model):
 
 class Customer(models.Model):
     class Meta:
-        ordering = ['name']
+        ordering = [Lower('name')]
 
     name = models.CharField(unique=True, max_length=200)
     alias = models.CharField(blank=True, null=True, unique=True, max_length=100)
@@ -46,17 +42,6 @@ class Customer(models.Model):
 
     def __str__(self):
         return (self.name)
-
-    def save(self):
-        if not self.alias:
-            self.alias = None
-        if not self.nip:
-            self.nip = None
-        if not self.email:
-            self.email = None
-        if not self.phone_number:
-            self.phone_number = None
-        super().save()
 
     def get_absolute_url(self):
         return reverse('customer:detail', kwargs={'pk': self.pk})

@@ -54,7 +54,6 @@ class Service_list(generic.ListView):
     template_name = 'services/list.html'
     context_object_name = 'services'
     paginate_by = 50
-    queryset = Service.objects.all().order_by('status')
 
 
 class My_services(generic.ListView):
@@ -62,5 +61,6 @@ class My_services(generic.ListView):
     template_name = 'services/my_services.html'
     context_object_name = 'services'
     paginate_by = 50
+
     def get_queryset(self):
-        return Service.objects.filter(responsible_persons=self.request.user).order_by('date')
+        return Service.objects.filter(responsible_persons=self.request.user)

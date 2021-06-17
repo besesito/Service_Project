@@ -23,7 +23,7 @@ class Status(models.Model):
 
 class Service(models.Model):
     class Meta:
-        ordering=['date']
+        ordering=['status', 'date']
     kind = models.ForeignKey(Kind_of_service, on_delete=models.PROTECT)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
@@ -41,4 +41,3 @@ class Service(models.Model):
         return self.customer.name
     def get_absolute_url(self):
         return reverse('service:detail', kwargs={'pk': self.pk})
-
