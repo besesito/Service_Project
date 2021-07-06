@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Tag)
 admin.site.register(Platform)
 admin.site.register(Customer)
+admin.site.register(Image)

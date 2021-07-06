@@ -1,6 +1,6 @@
 from django.views import generic
-from .models import Customer
-from .forms import CustomerForm
+from .models import Customer, Image
+from .forms import CustomerForm, ImageForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -31,6 +31,8 @@ class Customer_detail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['services'] = Service.objects.filter(customer=self.object).order_by('date')
+        context['images'] = Image.objects.filter(customer=self.object)
+        context['image_form'] = ImageForm()
         return context
 
 
@@ -51,10 +53,23 @@ class Customer_list(generic.ListView):
     template_name = 'customers/list.html'
     context_object_name = 'customers'
     paginate_by = 50
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['qs_json'] = json.dumps(list(Customer.objects.values()), default=str)
         return context
+
+class Image_create(SuccessMessageMixin, generic.CreateView):
+    model = Image
+    form_class = ImageForm
+    template_name = 'customers/image_add.html'
+    context_object_name = 'image'
+    success_message = 'Zdjęcie zostało dodane'
+
+    def form_valid(self, form):
+        form.instance.customer = Customer.objects.get(id=self.kwargs['pk'])
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 from Service_Project.validators import intiger_validate
 from django.db.models.functions import Lower
+from django.contrib.auth.models import User
 
 
 class Tag(models.Model):
@@ -45,3 +46,16 @@ class Customer(models.Model):
 
     def get_absolute_url(self):
         return reverse('customer:detail', kwargs={'pk': self.pk})
+
+class Image(models.Model):
+    image = models.ImageField(upload_to ='images')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return ("{} by {}".format(self.customer, self.author))
+
+    def get_absolute_url(self):
+        return reverse('customer:detail', kwargs={'pk': self.customer.id})

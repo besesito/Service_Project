@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Customer, Platform, Tag
+from .models import Customer, Platform, Tag, Image
 from django import forms
 
 
@@ -24,6 +24,14 @@ class CustomerForm(ModelForm):
         }
         widgets = {
             'contract': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+class ImageForm(ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image']
+        labels = {
+            'image' : ('Zdjęcie')
         }
 
 

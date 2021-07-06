@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
 {% load l10n %}
 {% localize on %}
 
@@ -15,8 +16,12 @@
     <div class="box">
         <h2 class="text-center">
             <b>{{ customer.name }}</b>
+            <br>
             <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-h2"
                                                                    src="/static/img/icons/pencil.png"></a>
+            <a href="{% url 'customer:image_add' customer.id %}"><img class="icon-size-h2"
+                                                                   src="/static/img/icons/photo.png"></a>
+
             <a href="{% url 'customer:delete' customer.id %}"><img class="icon-size-h2"
                                                                    src="/static/img/icons/bin.png"></a>
         </h2>
@@ -85,52 +90,50 @@
                 {% endif %}
             </div>
             <div class="col-xl-9">
-                <h3 class="text-center blue-color"><b>Usługi klienta</b></h3>
-                <div class="table-responsive-sm">
-                    <table class="table table-sm" style="margin:auto;">
-                        <thead>
-                        <tr>
-                            <th>Akcje</th>
-                            <th>Data realizacji</th>
-                            <th>Rodzaj</th>
-                            <th>Odpowiedzialne osoby</th>
-                            <th>Data dodania</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for service in services %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p"
-                                                                                     src="/static/img/icons/loupe.png"></a>
-                                <a href="{% url 'service:update' service.id %}"><img class="icon-size-p"
-                                                                                     src="/static/img/icons/pencil.png"></a>
-                                <a href="{% url 'service:delete' service.id %}"><img class="icon-size-p"
-                                                                                     src="/static/img/icons/bin.png"></a>
-                            </td>
-                            <td>
-                                {{ service.date|default:"do ustalenia" }}
-                            </td>
-                            <td>
-                                {{ service.kind }}
-                            </td>
-                            <td>
-                                {% for person in service.responsible_persons.all %}
-                                {{ person }}
-                                {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            </td>
-                            <td>
-                                {{ service.created|date:"d E Y" }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% if not services %}
-                <br>
-                <h3 class="blue-color text-center">Brak usuług dla tego klienta</h3>
+                {% if services %}
+                    <h3 class="text-center blue-color"><b>Usługi klienta</b></h3>
+                    <div class="table-responsive-sm">
+                        <table class="table table-sm" style="margin:auto;">
+                            <thead>
+                            <tr>
+                                <th>Akcje</th>
+                                <th>Data realizacji</th>
+                                <th>Rodzaj</th>
+                                <th>Odpowiedzialne osoby</th>
+                                <th>Data dodania</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for service in services %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p"
+                                                                                        src="/static/img/icons/loupe.png"></a>
+                                    <a href="{% url 'service:update' service.id %}"><img class="icon-size-p"
+                                                                                        src="/static/img/icons/pencil.png"></a>
+                                    <a href="{% url 'service:delete' service.id %}"><img class="icon-size-p"
+                                                                                        src="/static/img/icons/bin.png"></a>
+                                </td>
+                                <td>
+                                    {{ service.date|default:"do ustalenia" }}
+                                </td>
+                                <td>
+                                    {{ service.kind }}
+                                </td>
+                                <td>
+                                    {% for person in service.responsible_persons.all %}
+                                    {{ person }}
+                                    {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {{ service.created|date:"d E Y" }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 {% endif %}
                 {% if customer.address %}
                 <iframe
@@ -142,10 +145,12 @@
                         allowfullscreen
                         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAm-CaDQC3OYmpfq4cqpFspIC1-HfLyBj8&q={{customer.address}}">
                 </iframe>
-                {% else %}
-                <br/>
-                <br/>
-                <h3 class="text-center blue-color">Brak adresu do wyświetlenia mapy</h3>
+                {% endif %}
+                {% if images %}
+                    {% for image in images %}
+                        <img onclick="window.location='{{ image.image.url }}';" 
+                        style="cursor: pointer;" src="{{ image.image.url }}" class="img-fluid">
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>
