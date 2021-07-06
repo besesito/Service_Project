@@ -23,19 +23,22 @@
                 <th>Status</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="table">
             {% for service in services %}
             <tr>
                 <td>
-                    <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
-                    <a href="{% url 'service:update' service.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
-                    <a href="{% url 'service:delete' service.id %}"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
+                    <a href="{% url 'service:detail' service.pk %}"><img class="icon-size-p"
+                                                                         src="/static/img/icons/loupe.png"></a>
+                    <a href="{% url 'service:update' service.id %}"><img class="icon-size-p"
+                                                                         src="/static/img/icons/pencil.png"></a>
+                    <a href="{% url 'service:delete' service.id %}"><img class="icon-size-p"
+                                                                         src="/static/img/icons/bin.png"></a>
                 </td>
                 <td>
-                        {{ service.customer }}
+                    {{ service.customer }}
                 </td>
                 <td>
-                        {{ service.date|default:"do ustalenia" }}
+                    {{ service.date|default:"do ustalenia" }}
                 </td>
                 <td>
                     {{ service.kind }}
@@ -68,6 +71,7 @@
         </span>
     </div>
 </div>
+
 
 {% endlocalize %}
 {% endblock %}
