@@ -12,6 +12,7 @@
     {% endfor %}
     {% endif %}
 
+    <input id="search_field" class="form-control mt-3 mb-3 width-500" placeholder="Wyszukaj serwis dla klienta..."/>
     <div class="table-responsive-sm">
         <table class="table table-sm" style="margin:auto;">
             <thead>
@@ -71,6 +72,12 @@
         </span>
     </div>
 </div>
+
+
+<script>
+    const data = JSON.parse('{{ qs_json|safe }}')
+</script>
+<script src="/static/js/services-list.js"></script>
 
 
 {% endlocalize %}

@@ -8,7 +8,12 @@ from Service_Project.validators import intiger_validate
 class Kind_of_service(models.Model):
     class Meta:
         ordering=['kind']
+
     kind = models.CharField(max_length=100)
+
+    def natural_key(self):
+        return (self.kind)
+
     def __str__(self):
         return self.kind
 
@@ -16,7 +21,12 @@ class Kind_of_service(models.Model):
 class Status(models.Model):
     class Meta:
         ordering=['status']
+
     status = models.CharField(max_length=100)
+    
+    def natural_key(self):
+        return self.status
+    
     def __str__(self):
         return self.status
 

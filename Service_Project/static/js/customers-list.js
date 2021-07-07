@@ -3,7 +3,6 @@ const input = document.getElementById('search_field')
 let = filtered = []
 input.addEventListener('keyup', (e)=> {
     table.innerHTML = ""
-    console.log(rdata)
     filtered = rdata.filter(customer=> customer['name'].toLowerCase().includes(e.target.value.toLowerCase()))
     if (filtered.length > 0){
         filtered.map(customer=>{
