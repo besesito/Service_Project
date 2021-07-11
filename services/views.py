@@ -56,10 +56,10 @@ class Service_list(generic.ListView):
     
     context_object_name = 'services'
     paginate_by = 50
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['qs_json'] = serializers.serialize("json", Service.objects.all(), use_natural_foreign_keys=True)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['qs_json'] = serializers.serialize("json", Service.objects.all(), use_natural_foreign_keys=True)
+    #     return context
 
 
 class My_services(generic.ListView):

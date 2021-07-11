@@ -1,11 +1,11 @@
 from django.urls import path
+from rest_framework import routers
 from . import views
 
+router = routers.SimpleRouter()
+
+router.register('customer', views.CustomerModelViewSet, basename='customer')
+router.register('service', views.ServiceModelViewSet, basename='service')
+
 urlpatterns = [
-	path('', views.apiOverview, name="api-overview"),
-	path('customers-list/', views.customerList, name="customers-list"),
-	path('customer-detail/<str:pk>/', views.customerDetail, name="customer-detail"),
-	path('customer-create/', views.customerCreate, name="customer-create"),
-    path('customer-update/<str:pk>/', views.customerUpdate, name="customer-update"),
-	path('customer-delete/<str:pk>/', views.customerDelete, name="customer-delete"),
-]
+] + router.urls

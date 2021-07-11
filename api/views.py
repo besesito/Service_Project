@@ -1,57 +1,22 @@
-from .serializers import CustomerSerializer, ServiceSerializer
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+from rest_framework import filters
+
+from .serializers import CustomerSerializer, WriteServiceSerializer, ReadServiceSerializer
 from customers.models import Customer
 from services.models import Service
 
-#API
-@api_view(['GET'])
-def apiOverview(request):
-    api_urls = {
-        'CustomerList':'/customers-list/',
-		'CustomerDetail':'/customer-detail/<str:pk>/',
-		'CustomerCreate':'/customer-create/',
-		'CustomerUpdate':'/customer-update/<str:pk>/',
-		'CustomerDelete':'/customer-delete/<str:pk>/'
-    }
-    return Response(api_urls)
 
-@api_view(['GET'])
-def customerList(request):
-	customers = Customer.objects.all().order_by('-id')
-	serializer = CustomerSerializer(customers, many=True)
-	return Response(serializer.data)
+class CustomerModelViewSet(ModelViewSet):
+	queryset = Customer.objects.all()
+	serializer_class = CustomerSerializer
 
-@api_view(['GET'])
-def customerDetail(request, pk):
-	customers = Customer.objects.get(id=pk)
-	serializer = CustomerSerializer(customers, many=False)
-	return Response(serializer.data)
+class ServiceModelViewSet(ModelViewSet):
+	queryset = Service.objects.select_related("customer", "kind", "status", "author")
+	filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+	search_fields = ["customer__name"]
+	ordering_fields = ['date']
 
-
-@api_view(['POST'])
-def customerCreate(request):
-	serializer = CustomerSerializer(data=request.data)
-
-	if serializer.is_valid():
-		serializer.save()
-
-	return Response(serializer.data)
-
-@api_view(['POST'])
-def customerUpdate(request, pk):
-	customer = Customer.objects.get(id=pk)
-	serializer = CustomerSerializer(instance=customer, data=request.data)
-
-	if serializer.is_valid():
-		serializer.save()
-
-	return Response(serializer.data)
-
-
-@api_view(['DELETE'])
-def customerDelete(request, pk):
-	customer = Customer.objects.get(id=pk)
-	customer.delete()
-
-	return Response('Item succsesfully delete!')
+	def get_serializer_class(self):
+		if self.action in ('list', 'retrieve'):
+			return ReadServiceSerializer
+		return WriteServiceSerializer
