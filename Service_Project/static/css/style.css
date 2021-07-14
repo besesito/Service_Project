@@ -57,18 +57,6 @@ footer{
     max-width: 500px;
 }
 
-/* form{
-    border: 5px solid rgba(22,126,158,0.8);
-    border-radius: 10px;
-    padding: 20px;
-    margin: auto;
-    max-width: 500px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    -webkit-box-shadow: 0px 0px 20px 0px #000000;
-    box-shadow: 0px 0px 20px 0px #000000;
-    background-color: rgb(224, 235, 235, 0.4);
-} */
 
 form div{
     margin-bottom: 20px;
@@ -130,7 +118,3 @@ form div{
     font-weight: bold;
     color: #db2500;
 }
-
-
-
-

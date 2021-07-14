@@ -1,15 +1,23 @@
 import django_filters
-from .models import Customer
+from .models import Customer, Platform, Tag
+from django import forms
 
 class CustomerFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(label="Nazwa", lookup_expr='icontains')
+    alias = django_filters.CharFilter(label="Alias", lookup_expr='icontains')
+    nip = django_filters.CharFilter(label="NIP", lookup_expr='icontains')
+    platforms = django_filters.ModelMultipleChoiceFilter(label="Platformy", queryset=Platform.objects.all(), widget=forms.CheckboxSelectMultiple)
+    tags = django_filters.ModelMultipleChoiceFilter(label="Tagi", queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = Customer
-        fields = {
-            'name': ['icontains'],
-            'alias': ['icontains'],
-            'nip': ['icontains'], 
-            'tags': ['exact'], 
-            'platforms': ['exact']
-            }
-    
+        fields = [
+            'name',
+            'alias',
+            'nip',
+            'platforms',
+            'tags'
+            ]
+        
 
+    

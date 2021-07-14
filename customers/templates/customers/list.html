@@ -14,15 +14,15 @@
 
 
     <form method="GET" class="mt-4">
-        <div class="row  gx-3 gy-2 align-items-center">
+        <div class="row  gx-3 gy-2" style="margin-bottom: 0px">
                 <div class="col-sm-2">
-                    {{ filter.form.name__icontains|as_crispy_field }}
+                    {{ filter.form.name|as_crispy_field }}
                 </div>
                 <div class="col-sm-2">
-                    {{ filter.form.alias__icontains|as_crispy_field }}
+                    {{ filter.form.alias|as_crispy_field }}
                 </div>
                 <div class="col-sm-2">
-                    {{ filter.form.nip__icontains|as_crispy_field }}
+                    {{ filter.form.nip|as_crispy_field }}
                 </div>
                 <div class="col-sm-2">
                     {{ filter.form.tags|as_crispy_field }}
@@ -30,7 +30,7 @@
                 <div class="col-sm-2">
                     {{ filter.form.platforms|as_crispy_field }}
                 </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
                 <button type="submit" class="btn btn-success crazy-btn">Filtruj</button>
             </div>
         </div>
@@ -47,44 +47,32 @@
                     <th>E-mail</th>
                 </tr>
             </thead>
-            <tbody id="table">
-                {% if filter.qs %}
+            {% if filter.qs %}
+                <tbody id="table">
                     {% for customer in filter.qs %}
-                    <tr>
-                        <td>
-                            <a href="{% url 'customer:detail' customer.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
-                            <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
-                            <a href="{% url 'customer:delete' customer.id %}"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
-                        </td>
-                        {% if customer.alias %}
+                        <tr>
                             <td>
-                                {{ customer.alias }}
+                                <a href="{% url 'customer:detail' customer.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
+                                <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                                <a href="{% url 'customer:delete' customer.id %}"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
                             </td>
-                        {% else %}
-                            <td>
-                                {{ customer.name }}
-                            </td>
-                        {% endif %}
-                        <td>{{ customer.phone_number|default:"brak" }}</td>
-                        <td>{{ customer.email|default:"brak" }}</td>
-                    </tr>
+                            {% if customer.alias %}
+                                <td>
+                                    {{ customer.alias }}
+                                </td>
+                            {% else %}
+                                <td>
+                                    {{ customer.name }}
+                                </td>
+                            {% endif %}
+                            <td>{{ customer.phone_number|default:"brak" }}</td>
+                            <td>{{ customer.email|default:"brak" }}</td>
+                        </tr>
                     {% endfor %}
-                {% else %}
-                    <h3 class='text-center'>Brak wyników...</h3>
-                {% endif %}
-            </tbody>
+                </tbody>
+            {% else %}
+                <h3 class='text-center'>Brak wyników...</h3>
+            {% endif %}
         </table>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#id_tags').select2();
-            $('#id_platforms').select2();
-        });
-    </script>
-    
-   
-
 {% endblock %}

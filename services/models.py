@@ -35,7 +35,7 @@ class Service(models.Model):
     class Meta:
         ordering=['status', 'date']
     kind = models.ForeignKey(Kind_of_service, on_delete=models.PROTECT)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='services')
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     date = models.DateField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
