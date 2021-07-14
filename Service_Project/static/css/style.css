@@ -37,18 +37,7 @@ footer{
     background-color: rgb(224, 235, 235, 0.4);
 }
 
-form{
-    border: 5px solid rgba(22,126,158);
-    border-radius: 10px;
-    padding: 20px;
-    margin: auto;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    -webkit-box-shadow: 0px 0px 20px 0px #000000;
-    box-shadow: 0px 0px 20px 0px #000000;
-    background-color: rgb(224, 235, 235, 0.4);
-    max-width: 500px;
-}
+
 
 
 .map{

@@ -146,13 +146,15 @@
                         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAm-CaDQC3OYmpfq4cqpFspIC1-HfLyBj8&q={{customer.address}}">
                 </iframe>
                 {% endif %}
-                {% if images %}
-                    {% for image in images %}
-                        <img onclick="window.location='{{ image.image.url }}';" 
-                        style="cursor: pointer;" src="{{ image.image.url }}" class="img-fluid">
-                    {% endfor %}
-                {% endif %}
             </div>
+        </div>
+        <div class='row'>
+            {% if images %}
+                {% for image in images %}
+                    <img onclick="window.location='{{ image.image.url }}';" 
+                    style="cursor: pointer;" src="{{ image.image.url }}" class="img-thumbnail col-4">
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

@@ -12,7 +12,7 @@
 
 <div class="text-center container">
     <h1 class="m-2"><b>Dodaj klienta</b></h1>
-    <form method="post">
+    <form method="post" class='box width-500'>
         {% csrf_token %}
         {{ form|crispy }}
         <button class="crazy-btn btn btn-success" type="submit">Dodaj</button>

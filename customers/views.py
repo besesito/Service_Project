@@ -5,8 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from services.models import Service
-import json
-
+from .filters import CustomerFilter
 # Create your views here.
 
 class Customer_add(SuccessMessageMixin, generic.edit.CreateView):
@@ -32,7 +31,6 @@ class Customer_detail(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['services'] = Service.objects.filter(customer=self.object).order_by('date')
         context['images'] = Image.objects.filter(customer=self.object)
-        context['image_form'] = ImageForm()
         return context
 
 
@@ -51,13 +49,13 @@ class Customer_delete(generic.DeleteView):
 class Customer_list(generic.ListView):
     model = Customer
     template_name = 'customers/list.html'
-    context_object_name = 'customers'
     paginate_by = 50
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['qs_json'] = json.dumps(list(Customer.objects.values()), default=str)
+        context['filter'] = CustomerFilter(self.request.GET, queryset=self.get_queryset())
         return context
+    
 
 class Image_create(SuccessMessageMixin, generic.CreateView):
     model = Image
@@ -70,9 +68,4 @@ class Image_create(SuccessMessageMixin, generic.CreateView):
         form.instance.customer = Customer.objects.get(id=self.kwargs['pk'])
         form.instance.author = self.request.user
         return super().form_valid(form)
-
-
-
-
-
 
