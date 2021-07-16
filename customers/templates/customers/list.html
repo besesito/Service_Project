@@ -13,7 +13,7 @@
 
 
 
-    <form method="GET" class="mt-4">
+    <form class="mt-4" data-hx-get="{% url 'customer:search' %}" hx-target="#app" hx-trigger="change">
         <div class="row  gx-3 gy-2" style="margin-bottom: 0px">
                 <div class="col-sm-2">
                     {{ filter.form.name|as_crispy_field }}
@@ -37,42 +37,45 @@
     </form>
 
 
-    <div class="table-responsive-sm">
-        <table class="table table-sm" style="margin:auto;">
-            <thead>
-                <tr>
-                    <th>Akcje</th>
-                    <th>Klient</th>
-                    <th>Telefon</th>
-                    <th>E-mail</th>
-                </tr>
-            </thead>
-            {% if filter.qs %}
-                <tbody id="table">
-                    {% for customer in filter.qs %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'customer:detail' customer.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
-                                <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
-                                <a href="{% url 'customer:delete' customer.id %}"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
-                            </td>
-                            {% if customer.alias %}
+    <div id="app">
+        <div class="table-responsive-sm">
+            <table class="table table-sm" style="margin:auto;">
+                <thead>
+                    <tr>
+                        <th>Akcje</th>
+                        <th>Klient</th>
+                        <th>Telefon</th>
+                        <th>E-mail</th>
+                    </tr>
+                </thead>
+                {% if filter.qs %}
+                    <tbody id="table">
+                        {% for customer in filter.qs %}
+                            <tr>
                                 <td>
-                                    {{ customer.alias }}
+                                    <a href="{% url 'customer:detail' customer.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
+                                    <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                                    <a href="{% url 'customer:delete' customer.id %}"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
                                 </td>
-                            {% else %}
-                                <td>
-                                    {{ customer.name }}
-                                </td>
-                            {% endif %}
-                            <td>{{ customer.phone_number|default:"brak" }}</td>
-                            <td>{{ customer.email|default:"brak" }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            {% else %}
-                <h3 class='text-center'>Brak wyników...</h3>
-            {% endif %}
-        </table>
+                                {% if customer.alias %}
+                                    <td>
+                                        {{ customer.alias }}
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        {{ customer.name }}
+                                    </td>
+                                {% endif %}
+                                <td>{{ customer.phone_number|default:"brak" }}</td>
+                                <td>{{ customer.email|default:"brak" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% else %}
+                    <h3 class='text-center'>Brak wyników...</h3>
+                {% endif %}
+            </table>
+        </div>
     </div>
+    <script src="https://unpkg.com/htmx.org@1.5.0"></script>
 {% endblock %}

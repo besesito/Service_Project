@@ -6,8 +6,8 @@ class CustomerFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(label="Nazwa", lookup_expr='icontains')
     alias = django_filters.CharFilter(label="Alias", lookup_expr='icontains')
     nip = django_filters.CharFilter(label="NIP", lookup_expr='icontains')
-    platforms = django_filters.ModelMultipleChoiceFilter(label="Platformy", queryset=Platform.objects.all(), widget=forms.CheckboxSelectMultiple)
-    tags = django_filters.ModelMultipleChoiceFilter(label="Tagi", queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple)
+    platforms = django_filters.ModelMultipleChoiceFilter(label="Platformy", queryset=Platform.objects.all(), widget=forms.CheckboxSelectMultiple, conjoined=True)
+    tags = django_filters.ModelMultipleChoiceFilter(label="Tagi", queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple, conjoined=True)
 
     class Meta:
         model = Customer

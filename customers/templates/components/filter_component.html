@@ -1,0 +1,38 @@
+<div class="table-responsive-sm">
+    <table class="table table-sm" style="margin:auto;">
+        <thead>
+            <tr>
+                <th>Akcje</th>
+                <th>Klient</th>
+                <th>Telefon</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        {% if filter.qs %}
+            <tbody id="table">
+                {% for customer in filter.qs %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'customer:detail' customer.pk %}"><img class="icon-size-p" src="/static/img/icons/loupe.png"></a>
+                            <a href="{% url 'customer:update' customer.id %}"><img class="icon-size-p" src="/static/img/icons/pencil.png"></a>
+                            <a href="{% url 'customer:delete' customer.id %}"><img class="icon-size-p" src="/static/img/icons/bin.png"></a>
+                        </td>
+                        {% if customer.alias %}
+                            <td>
+                                {{ customer.alias }}
+                            </td>
+                        {% else %}
+                            <td>
+                                {{ customer.name }}
+                            </td>
+                        {% endif %}
+                        <td>{{ customer.phone_number|default:"brak" }}</td>
+                        <td>{{ customer.email|default:"brak" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% else %}
+            <h3 class='text-center'>Brak wyników...</h3>
+        {% endif %}
+    </table>
+</div>

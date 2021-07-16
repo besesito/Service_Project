@@ -56,6 +56,15 @@ class Customer_list(generic.ListView):
         context['filter'] = CustomerFilter(self.request.GET, queryset=self.get_queryset())
         return context
     
+class Customer_search_list(generic.ListView):
+    model = Customer
+    template_name = 'components/filter_component.html'
+    paginate_by = 50
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = CustomerFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 class Image_create(SuccessMessageMixin, generic.CreateView):
     model = Image
