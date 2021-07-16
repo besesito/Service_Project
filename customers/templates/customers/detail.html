@@ -150,6 +150,9 @@
         </div>
         <div class='row'>
             {% if images %}
+                <h2 class='text-center'><img class="icon-size-h2"
+                    src="/static/img/icons/photo.png"> Zdjęcia <img class="icon-size-h2"
+                    src="/static/img/icons/photo.png"></h2>
                 {% for image in images %}
                     <img onclick="window.location='{{ image.image.url }}';" 
                     style="cursor: pointer;" src="{{ image.image.url }}" class="img-thumbnail col-4">
