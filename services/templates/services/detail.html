@@ -2,6 +2,8 @@
 {% block content %}
 {% load l10n %}
 {% localize on %}
+{% load humanize %}
+
 
 <div class="container">
     {% if messages %}
@@ -22,8 +24,8 @@
             <h3 class="text-center">dla klienta
                 <a href="{% url 'customer:detail' service.customer.id %}">{{ service.customer }}</a>
             </h3>
-            <p class="text-center text-muted">Utworzony: {{ service.created }} przez {{ service.author }}
-                <br> Ostatnio edytowany: {{ service.updated }}
+            <p class="text-center text-muted">Utworzony: {{ service.created|naturaltime }} przez {{ service.author }}
+                <br> Ostatnio edytowany: {{ service.updated|naturaltime }}
             </p>
             <p><b>Status:</b> {{ service.status }}</p>
             <p><b>Data:</b> {{ service.date|default:"do ustalenia" }}</p>

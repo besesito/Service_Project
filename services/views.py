@@ -53,13 +53,9 @@ class Service_detail(generic.DetailView):
 class Service_list(generic.ListView):
     model = Service
     template_name = 'services/list.html'
-    
     context_object_name = 'services'
     paginate_by = 50
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['qs_json'] = serializers.serialize("json", Service.objects.all(), use_natural_foreign_keys=True)
-    #     return context
+
 
 
 class My_services(generic.ListView):

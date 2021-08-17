@@ -118,3 +118,9 @@ form div{
     font-weight: bold;
     color: #db2500;
 }
+
+
+.alert ul {
+    list-style-type: none;
+    padding: 0;
+}

@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% load l10n %}
 {% localize on %}
+{% load humanize %}
 
 <div class="container">
     {% if messages %}
@@ -26,7 +27,7 @@
                                                                    src="/static/img/icons/bin.png"></a>
         </h2>
         <p class="text-center text-muted">
-            Utworzony: {{ customer.created }}, ostatnio edytowany {{ customer.updated }}
+            Utworzony: {{ customer.created|naturaltime }}, ostatnio edytowany {{ customer.updated|naturaltime }}
         </p>
         <div class="row col-xl-12">
             <div class="col-xl-3">
